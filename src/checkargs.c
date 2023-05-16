@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkargs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afelicia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 22:43:42 by afelicia          #+#    #+#             */
-/*   Updated: 2023/05/09 23:09:57 by afelicia         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:42:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,25 @@ int	checkargs(int argc, char **argv)
 				argv[1][i] -= 32; 
 			i++;
 		}
-		if (ft_strncmp(argv[1], "M") == 0 || (ft_strncmp(argv[1], "MANDELBROT") == 0)
+		if (ft_strncmp(argv[1], "M") == 0 || ft_strncmp(argv[1], "MANDELBROT") == 0)
 				return (1);
-		else if (ft_strncmp(argv[1], "J") == 0 || (ft_strncmp(argv[1], "JULIA") == 0)
+		else if (ft_strncmp(argv[1], "J") == 0 || ft_strncmp(argv[1], "JULIA") == 0)
 		{
 			if (argc == 1)
 			{
 				f->kr = -0.766667;
 				f->ki = -0.090000;
 			}
-			if (f->kr > 2.0 || f->kr < -2.0)
-				printf("Please enter a kr value between 2.0 and -2.0");
-			if (f->ki > 2.0 || f->ki < -2.0)
-				printf("Please enter a ki value between 2.0 and -2.0");
+			else
+			{
+				if (f->kr > 2.0 || f->kr < -2.0)
+					printf("Please enter a kr value between 2.0 and -2.0");
+				if (f->ki > 2.0 || f->ki < -2.0)
+					printf("Please enter a ki value between 2.0 and -2.0");
+			}
 			return (2);
 		}
-		else if (ft_strncmp(argv[1], "X") == 0 || (ft_strncmp(argv[1], "MANDELBOX") == 0)
+		else if (ft_strncmp(argv[1], "X") == 0 || ft_strncmp(argv[1], "MANDELBOX") == 0)
 				return (3);
 	}
 	printf("Utilization: please enter M or Mandelbrot for the same name set,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afelicia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 23:42:56 by afelicia          #+#    #+#             */
-/*   Updated: 2023/05/09 23:44:05 by afelicia         ###   ########.fr       */
+/*   Updated: 2023/05/12 03:25:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	keycodes(int keycode, t_data *data)
 {
-	double	distance;
 	double	c_i;
 	double	c_r;
 
-	distance = 0.1;
 	c_r = data->max_r - data->min_r;
 	c_i = data->max_i - data->min_i;
 	if (keycode == KEY_ESC)
@@ -27,29 +25,51 @@ int	keycodes(int keycode, t_data *data)
 		return (0);
 	}
 	else if (keycode == 124)
-	{
-		data->min_r -= c_r * distance;
-		data->max_r -= c_r * distance;
-	}
+		subtract(0, c_r, c_i, data);
 	else if (keycode == 123)
-	{
-		data->min_r += c_r * distance;
-		data->max_r += c_r * distance;
-	}
+		addition(0, c_r, c_i, data);
 	else if (keycode == 126)
+		addition(1, c_r, c_i, data);
+	else if (keycode == 125)
+		subtract(1, c_r, c_i, data);
+	else
+		return (1);
+	render(data);
+	return (0);
+}
+
+static void	addition(int def, double c_r, double c_i, t_data data)
+{
+	double	distance;
+
+	distance = 0.1;
+	if (def == 1)
 	{
 		data->min_i += c_i * distance;
 		data->max_i += c_i * distance;
 	}
-	else if (keycode == 125)
+	else
+	{
+		data->min_r += c_r * distance;
+		data->max_r += c_r * distance;
+	}
+}
+
+static void	subtract(int def, double c_r, double c_i, t_data data)
+{
+	double	distance;
+
+	distance = 0.1;
+	if (def == 1)
 	{
 		data->min_i -= c_i * distance;
 		data->max_i -= c_i * distance;
 	}
 	else
-		return (1);
-	render(data);
-	return (0);
+	{
+		data->min_r -= c_r * distance;
+		data->max_r -= c_r * distance;
+	}
 }
 
 int	mousecode(int button, int x, int y, t_data *data)
@@ -69,21 +89,12 @@ int	mousecode(int button, int x, int y, t_data *data)
 	return (0);
 }
 
-void	zoom(t_data *data, double c_r, double c_i, double zoom)
+static void	zoom(t_data *data, double c_r, double c_i, double zoom)
 {
 	data->max_r = c_r + (data->max_r - c_r) * zoom;
 	data->min_r = c_r + (data->min_r - c_r) * zoom;
 	data->min_i = c_i + (data->min_i - c_i) * zoom;
 	data->max_i = c_i + (data->max_i - c_i) * zoom;
-}
-
-int	close_esc(t_data *data)
-{
-	if (data->img)
-		mlx_destroy_image(data->mlx, data->img);
-	if (data->win && data->mlx)
-		mlx_destroy_window(data->mlx, data->win);
-	exit (0);
 }
 
 /*	
