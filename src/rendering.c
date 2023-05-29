@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:29:47 by afelicia          #+#    #+#             */
-/*   Updated: 2023/05/15 03:04:46 by marvin           ###   ########.fr       */
+/*   Updated: 2023/05/18 00:27:50 by afelicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,42 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+static void	selectfractal(t_data *data, double cr, double ci, int *n)
+{
+	if (data->code == 1)
+		*n = mandelbrot(cr, ci);
+	else if (data->code == 3)
+		*n = mandelbox(data, cr, ci);
+	else if (data->code == 2)
+		*n = julia(data);
+}
+
+static int get_color(int n)
+{
+	double	r;
+	double	g;
+	double	b;
+
+	if (n == 60)
+		return 0x000000;
+	else if (n < 60 / 2) 
+	{
+		double t = (double)n / (60 / 2 - 1); // Normalized value between 0 and 1
+		r = t; // Red increases from 0.0 to 1.0
+		g = 0.0;
+		b = 0.0; // black background
+		return rgb_to_int(r, g, b);
+	}
+	else
+	{
+		double	t = (double)(n - 60 / 2) / (60 - 1);
+		r = 1.0;
+		g = t;
+		b = 1.0 - t;
+		return (rgb_to_int(r, g , b));
+	}
+}
+
 void	painting(int size, t_data *data, int color)
 {
 	int		i;
@@ -29,70 +65,19 @@ void	painting(int size, t_data *data, int color)
 	int		n;
 
 	i = 0;
-	n = 0;
-	j = 0;
-	cr = data->min_r + (data->max_r - data->min_r) * (double)j / WIDTH;
-	ci = data->min_i + (data->max_i - data->min_i) * (double)i / HEIGHT;
 	while (i < size)
 	{
 		j = 0;
 		while (j < size)
-			select(data, cr, ci, &n);
-		color = get_color(n);
-		my_mlx_pixel_put(data, j, i, color);
-		j++;
+		{
+			cr = data->min_r + (data->max_r - data->min_r) * (double)j / WIDTH;
+			ci = data->min_i + (data->max_i - data->min_i) * (double)i / HEIGHT;
+			n = 0;
+			selectfractal(data, cr, ci, &n);
+			color = get_color(n);
+			my_mlx_pixel_put(data, j, i, color);
+			j++;
+		}
+		i++;
 	}
-	i++;
-}
-
-static void	select(t_data data, double cr, double ci, int *n)
-{
-	if (data->code == 1)
-		*n = mandelbrot(&data, cr, ci);
-	else if (data->code == 3)
-		*n = mandelbox(&data, cr, ci);
-	else if (data->code == 2)
-		*n = julia(&data);
-}
-
-static int get_color(int n)
-{
-	if (n == 60)
-	{
-	return 0x000000;
-	}
-	else {
-	double t = 1.0 - ((double)n / 60.0); // Normalized value between 0 and 1
-	double r, g, b;
-	r = t; // Red increases from 0.0 to 1.0
-	g = t; // Green increases from 0.0 to 1.0
-	b = t; // Blue increases from 0.0 to 1.0
-	return rgb_to_int(r, g, b);
-	}
-}
-
-void painting(int size, t_data *data, int color)
-{
-    int i;
-    int j;
-    double cr;
-    double ci;
-    int n;
-
-    i = 0;
-    n = 0;
-    while (i < size)
-    {
-        j = 0;
-        while (j < size)
-        {
-            cr = data->min_r + (data->max_r - data->min_r) * (double)j / WIDTH;
-            ci = data->min_i + (data->max_i - data->min_i) * (double)i / HEIGHT;
-            select(data, cr, ci, &n);
-            color = get_color(n);
-            my_mlx_pixel_put(data, j, i, color);
-            j++;
-        }
-        i++;
-    }
 }

@@ -6,7 +6,7 @@
 /*   By: afelicia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:16:20 by afelicia          #+#    #+#             */
-/*   Updated: 2023/05/03 19:06:23 by afelicia         ###   ########.fr       */
+/*   Updated: 2023/05/18 00:18:24 by afelicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	color_converter(const char *str)
 	return (result);
 }
 
-/*int rgb_to_int(double r, double g, double b)
+int rgb_to_int(double r, double g, double b)
 {
     int color = 0;
     color |= (int)(b * 255);
@@ -58,7 +58,7 @@ int	color_converter(const char *str)
     return (color);
 }
 
-int	main()
+/*int	main()
 {
 	char *str = "FF2E00";
 	int	result = color_converter(str);

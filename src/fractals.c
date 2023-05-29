@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:29:20 by afelicia          #+#    #+#             */
-/*   Updated: 2023/05/12 03:25:28 by marvin           ###   ########.fr       */
+/*   Updated: 2023/05/17 23:21:54 by afelicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	mandelbrot(t_data *data, double cr, double ci)
+int	mandelbrot(double cr, double ci)
 {
 	double	zr;
 	double	zi;
