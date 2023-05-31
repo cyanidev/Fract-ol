@@ -14,7 +14,7 @@
 
 static void	init(t_data *data)
 {
-	if (data->code == 1)//mandelbrot
+	if ((data->code == 1) || (data->code == 4))//mandelbrot and tricorn
 	{
 		data->min_r = -2.0;
 		data->max_r = 1.0;
@@ -27,6 +27,9 @@ static void	init(t_data *data)
 		data->max_r = 4.0;
 		data->min_i = -4.0;
 		data->max_i = data->min_i + (data->max_r - data->min_r) * HEIGHT / WIDTH;
+		data->sx = 2.0;
+		data->rx = 0.5;
+		data->fx = 1.0;
 	}
 	else if (data->code == 2)//julia
 	{
@@ -101,12 +104,20 @@ int	main(int argc, char **argv)
 		mlx_loop(f.mlx);
 	}
 	else
-		printf("bruh");
+		printf("Error: run the program to see utilization");
 	return (0);
 }
 
 /*
-	data->sx = 2.0;
-	data->rx = 0.5;
-	data->fx = 1.0;
+
+	julia values chulitos
+	0.096667  -0.613333
+	0.183333 0.596667
+	-0.7269 0.1889
+	0.28 0.008
+	-0.12 -0.77
+	-1.476 0
+	-0.79 0.15
+	-0.162 1.04
+	0.3 -0.0 
 */

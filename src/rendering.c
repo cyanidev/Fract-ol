@@ -26,11 +26,51 @@ static void	selectfractal(t_data *data, double cr, double ci, int *n)
 		*n = mandelbrot(cr, ci);
 	else if (data->code == 3)
 		*n = mandelbox(data, cr, ci);
+	else if (data->code == 4)
+		*n = tricorn(cr, ci);
 	else if (data->code == 2)
-		*n = julia(data);
+		*n = julia(data, cr, ci);
 }
 
-static int get_color(int n)
+void hsv_to_rgb(double h, double s, double v, double *r, double *g, double *b)
+{
+    double c = v * s;
+    double x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));
+    double m = v - c;
+
+    double r1, g1, b1;
+    if (h < 60) {
+        r1 = c;
+        g1 = x;
+        b1 = 0;
+    } else if (h < 120) {
+        r1 = x;
+        g1 = c;
+        b1 = 0;
+    } else if (h < 180) {
+        r1 = 0;
+        g1 = c;
+        b1 = x;
+    } else if (h < 240) {
+        r1 = 0;
+        g1 = x;
+        b1 = c;
+    } else if (h < 300) {
+        r1 = x;
+        g1 = 0;
+        b1 = c;
+    } else {
+        r1 = c;
+        g1 = 0;
+        b1 = x;
+    }
+
+    *r = (r1 + m);
+    *g = (g1 + m);
+    *b = (b1 + m);
+}
+
+/*static int get_color(int n)
 {
 	double	r;
 	double	g;
@@ -54,6 +94,25 @@ static int get_color(int n)
 		b = 1.0 - t;
 		return (rgb_to_int(r, g , b));
 	}
+}*/
+
+int	get_color(int n)
+{
+    double hue, sat, val;
+    if (n == 60)
+        return 0x000000;
+
+    // Calculate hue based on number of iterations
+    hue = ((double)n / 60) * 360.0;
+
+    // Set saturation and value to 1.0 for full intensity colors
+    sat = 1.0;
+    val = 1.0;
+
+    // Convert HSV color to RGB and return as integer
+    double r, g, b;
+    hsv_to_rgb(hue, sat, val, &r, &g, &b);
+    return rgb_to_int(r, g, b);
 }
 
 void	painting(int size, t_data *data, int color)

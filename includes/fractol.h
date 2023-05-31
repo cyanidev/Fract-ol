@@ -73,14 +73,12 @@ void 	ret_error(char *error_msg);
 int		mousecode(int button, int x, int y, t_data *data);
 int		keycodes(int keycode, t_data *data);
 int		mandelbrot(double cr, double ci);
-int		julia(t_data *data);
-//int	tricorn(double cr, double ci);
+int		julia(t_data *data, double cr, double ci);
+int	tricorn(double cr, double ci);
 int		mandelbox(t_data *f, double cr, double ci);
 void	painting(int size, t_data *data, int color);
 void	render(t_data *data);
 void	checkargs(int argc, char **argv, t_data *f);
 int		rgb_to_int(double r, double g, double b);
-
-
 
 #endif

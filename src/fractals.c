@@ -34,7 +34,7 @@ int	mandelbrot(double cr, double ci)
 	return (n);
 }
 
-int	julia(t_data *data)
+int	julia(t_data *data, double cr, double ci)
 {
 	double	zr;
 	double	zi;
@@ -42,8 +42,8 @@ int	julia(t_data *data)
 	double	zi_n;
 	int		n;
 
-	zr = 0;
-	zi = 0;
+	zr = cr;
+	zi = ci;
 	n = 0;
 	while (n < 60 && (zr * zr - zi * zi) < 4)
 	{
@@ -70,7 +70,7 @@ int	tricorn(double cr, double ci)
 	while (n < 60 && (zr * zr - zi * zi) < 4)
 	{
 		zr_n = zr * zr - zi * zi + cr;
-		zi_n = 2 * zr * zi + ci;
+		zi_n = -2 * zr * zi + ci;
 		zr = zr_n;
 		zi = zi_n;
 		n++;

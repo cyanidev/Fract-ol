@@ -12,6 +12,41 @@
 
 #include "fractol.h"
 
+void	selectjulia(char argv, t_data *f)
+{
+	if (argv == '1')
+	{
+		f->kr = 0.096667;
+		f->ki = -0.613333;
+	}
+	else if (argv == '2')
+	{
+		f->kr = 0.183333;
+		f->ki = 0.596667;
+	}
+	else if (argv == '3')
+	{
+		f->kr = -0.7269;
+		f->ki = 0.1889;
+	}
+	else if (argv == '4')
+	{
+		f->kr = 0.28;
+		f->ki = 0.008;
+	}
+	else if (argv == '5')
+	{
+		f->kr = -0.12;
+		f->ki = -0.77;
+	}
+	else if (argv == '6')
+	{
+		f->kr = -1.476;
+		f->ki = 0;
+	}
+
+}
+
 void	checkargs(int argc, char **argv, t_data *f) 
 {
 	int	i;
@@ -27,24 +62,30 @@ void	checkargs(int argc, char **argv, t_data *f)
 		}
 		if (ft_strncmp(argv[1], "M", 2) == 0 || ft_strncmp(argv[1], "MANDELBROT", 10) == 0)
 				f->code = 1;
-		else if (ft_strncmp(argv[1], "J", 1) == 0 || ft_strncmp(argv[1], "JULIA", 5) == 0)
+		else if (ft_strncmp(argv[1], "J", 2) == 0 || ft_strncmp(argv[1], "JULIA", 5) == 0)
 		{
 			if (argc == 2)
 			{
 				f->kr = -0.766667;
 				f->ki = -0.090000;
+				f->code = 2;
 			}
-			else
+			else if (argc == 3)
 			{
-				if (f->kr > 2.0 || f->kr < -2.0)
-					printf("Please enter a kr value between 2.0 and -2.0");
-				if (f->ki > 2.0 || f->ki < -2.0)
-					printf("Please enter a ki value between 2.0 and -2.0");
+				if((argv[2][0] >= 48 && argv[2][0] <= 57) && argv[2][1] == '\0')
+				{
+					f->code = 2;
+					selectjulia(argv[2][0], f);
+				}
+				else
+					printf("Please enter a value between 0 and 9");
+				
 			}
-			f->code = 2;
 		}
-		else if (ft_strncmp(argv[1], "X", 1) == 0 || ft_strncmp(argv[1], "MANDELBOX", 9) == 0)
+		else if (ft_strncmp(argv[1], "X", 2) == 0 || ft_strncmp(argv[1], "MANDELBOX", 9) == 0)
 				f->code = 3;
+		else if (ft_strncmp(argv[1], "T", 2) == 0 || ft_strncmp(argv[1], "TRICORN", 9) == 0)
+				f->code = 4;
 		else
 			printf("ta mal");
 ;	}
@@ -53,4 +94,3 @@ void	checkargs(int argc, char **argv, t_data *f)
 					"J or Julia for the same name set additionaly kr and ki values"
 					"between 2.0 and -2.0");
 }
-
