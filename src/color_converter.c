@@ -26,28 +26,6 @@
 //0xAARRGGBB si el alpha esta al maximo el color es opaco, si está en cero
 //es totalmente transparente FF B3 26 ED (FF=1111 1111=255) (B3=1011 001=179)
 //(ED=1110 1101= 237) 
-int	color_converter(const char *str)
-{
-	int	i;
-	int	n;
-	int	result;
-
-	i = 0;
-	n = 0;
-	result = 0;
-	while(str[i])//A4
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			n = str[i] - 48;
-		else if (str[i] >= 'A' && str[i] <= 'F')
-			n = str[i] - 'A' + 10;
-		else
-			printf("bad color input");
-		i++;
-		result = result * 16 + n;
-	}
-	return (result);
-}
 
 int rgb_to_int(double r, double g, double b)
 {

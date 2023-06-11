@@ -59,6 +59,7 @@ int	keycodes(int keycode, t_data *data)
 	double	c_i;
 	double	c_r;
 
+	printf("boton pulsado= %d\n", keycode);
 	c_r = data->max_r - data->min_r;
 	c_i = data->max_i - data->min_i;
 	if (keycode == KEY_ESC)
@@ -66,14 +67,14 @@ int	keycodes(int keycode, t_data *data)
 		close_esc(data);
 		return (0);
 	}
-	else if (keycode == 124)
+	else if (keycode == RIGHT)
 		subtract(0, c_r, c_i, data);
-	else if (keycode == 123)
+	else if (keycode == LEFT)
 		addition(0, c_r, c_i, data);
-	else if (keycode == 125)
-		addition(1, c_r, c_i, data);
-	else if (keycode == 126)
+	else if (keycode == DOWN)
 		subtract(1, c_r, c_i, data);
+	else if (keycode == UP)
+		addition(1, c_r, c_i, data);
 	else
 		return (1);
 	render(data);
@@ -90,15 +91,12 @@ int	mousecode(int button, int x, int y, t_data *data)
 	printf("boton pulsado= %d\n", button);
 	c_r = data->min_r - data->max_r / 2.0;
 	c_i = data->max_i - data->min_i / 2.0;
-	if (button == 4)
+	if (button == ZOOM_IN)
 		zoom(data, c_r, c_i, 0.9);
-	else if (button == 5)
+	else if (button == ZOOM_OUT)
 		zoom(data, c_r, c_i, 1.1);
 	else
 		return (1);
 	render(data);
 	return (0);
 }
-
-/*	
-	printf("el codigo es:%d\n", keycode);*/

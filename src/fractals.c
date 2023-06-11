@@ -23,7 +23,7 @@ int	mandelbrot(double cr, double ci)
 	zr = 0;
 	zi = 0;
 	n = 0;
-	while (n < 60 && (zr * zr - zi * zi) < 4)
+	while (n < MAX_ITERATION && (zr * zr + zi * zi) < 4)
 	{
 		zr_n = zr * zr - zi * zi + cr;
 		zi_n = 2 * zr * zi + ci;
@@ -45,7 +45,7 @@ int	julia(t_data *data, double cr, double ci)
 	zr = cr;
 	zi = ci;
 	n = 0;
-	while (n < 60 && (zr * zr - zi * zi) < 4)
+	while (n < MAX_ITERATION && (zr * zr + zi * zi) < 4)
 	{
 		zr_n = zr * zr - zi * zi + data->kr;
 		zi_n = 2 * zr * zi + data->ki;
@@ -67,7 +67,7 @@ int	tricorn(double cr, double ci)
 	zr = cr;
 	zi = ci;
 	n = 0;
-	while (n < 60 && (zr * zr - zi * zi) < 4)
+	while (n < MAX_ITERATION && (zr * zr + zi * zi) < 4)
 	{
 		zr_n = zr * zr - zi * zi + cr;
 		zi_n = -2 * zr * zi + ci;

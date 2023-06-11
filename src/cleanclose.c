@@ -21,7 +21,7 @@ int	close_esc(t_data *data)
 	exit (0);
 }
 
-void ret_error(char *error_msg)
+void	ret_error(char *error_msg)
 {
 	perror(error_msg);
 	exit(EXIT_FAILURE);

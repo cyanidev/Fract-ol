@@ -54,4 +54,3 @@ int	mandelbox(t_data *f, double cr, double ci)
 	}
 	return (n);
 }
-

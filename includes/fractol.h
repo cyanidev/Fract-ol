@@ -24,6 +24,14 @@
 # define KEY_ESC 53
 # define WIDTH 900
 # define HEIGHT 900
+# define WIN_SIZE 900
+# define UP 126
+# define DOWN 125
+# define RIGHT 124
+# define LEFT 123
+# define ZOOM_IN 4
+# define ZOOM_OUT 5
+# define MAX_ITERATION 90
 
 /*   *****KEYCODES******
 
@@ -76,7 +84,7 @@ int		mandelbrot(double cr, double ci);
 int		julia(t_data *data, double cr, double ci);
 int	tricorn(double cr, double ci);
 int		mandelbox(t_data *f, double cr, double ci);
-void	painting(int size, t_data *data, int color);
+void	painting(t_data *data, int color);
 void	render(t_data *data);
 void	checkargs(int argc, char **argv, t_data *f);
 int		rgb_to_int(double r, double g, double b);

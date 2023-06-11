@@ -12,33 +12,32 @@
 
 #include "fractol.h"
 
-static void	init(t_data *data)
+static void	init(t_data *f)
 {
-	if ((data->code == 1) || (data->code == 4))//mandelbrot and tricorn
+	if ((f->code == 1) || (f->code == 4))
 	{
-		data->min_r = -2.0;
-		data->max_r = 1.0;
-		data->min_i = -1.5;
-		data->max_i = data->min_i + (data->max_r - data->min_r) * HEIGHT / WIDTH;
+		f->min_r = -2.0;
+		f->max_r = 1.0;
+		f->min_i = -1.5;
+		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	else if (data->code == 3)//mandelbox
+	else if (f->code == 3)
 	{
-		data->min_r = -4.0;
-		data->max_r = 4.0;
-		data->min_i = -4.0;
-		data->max_i = data->min_i + (data->max_r - data->min_r) * HEIGHT / WIDTH;
-		data->sx = 2.0;
-		data->rx = 0.5;
-		data->fx = 1.0;
+		f->min_r = -4.0;
+		f->max_r = 4.0;
+		f->min_i = -4.0;
+		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+		f->sx = 2.0;
+		f->rx = 0.5;
+		f->fx = 1.0;
 	}
-	else if (data->code == 2)//julia
+	else if (f->code == 2)
 	{
-		data->min_r = -2.0;
-		data->max_r = 2.0;
-		data->min_i = -2.0;
-		data->max_i = data->min_i + (data->max_r - data->min_r) * HEIGHT / WIDTH;
+		f->min_r = -2.0;
+		f->max_r = 2.0;
+		f->min_i = -2.0;
+		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	
 }
 
 void	render(t_data *data)
@@ -47,7 +46,7 @@ void	render(t_data *data)
 
 	color = 0;
 	mlx_clear_window(data->mlx, data->win);
-	painting(900, data, color);
+	painting(data, color);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
@@ -107,17 +106,3 @@ int	main(int argc, char **argv)
 		printf("Error: run the program to see utilization");
 	return (0);
 }
-
-/*
-
-	julia values chulitos
-	0.096667  -0.613333
-	0.183333 0.596667
-	-0.7269 0.1889
-	0.28 0.008
-	-0.12 -0.77
-	-1.476 0
-	-0.79 0.15
-	-0.162 1.04
-	0.3 -0.0 
-*/
