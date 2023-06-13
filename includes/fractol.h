@@ -54,8 +54,7 @@
 	 8 = 28
 	 9 = 25
 */
-
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -63,11 +62,11 @@ typedef struct	s_data {
 	int		endian;
 	void	*mlx;
 	void	*win;
-	double min_r;
-	double max_r;
-	double min_i;
-	double max_i;
-    double	kr;
+	double	min_r;
+	double	max_r;
+	double	min_i;
+	double	max_i;
+	double	kr;
 	double	ki;
 	double	sx;
 	double	rx;
@@ -75,18 +74,16 @@ typedef struct	s_data {
 	int		code;
 }	t_data;
 
-int		color_converter(const char *str);
 int		close_esc(t_data *data);
-void 	ret_error(char *error_msg);
+void	ret_error(char *error_msg);
 int		mousecode(int button, int x, int y, t_data *data);
 int		keycodes(int keycode, t_data *data);
 int		mandelbrot(double cr, double ci);
 int		julia(t_data *data, double cr, double ci);
-int	tricorn(double cr, double ci);
+int		tricorn(double cr, double ci);
 int		mandelbox(t_data *f, double cr, double ci);
 void	painting(t_data *data, int color);
 void	render(t_data *data);
 void	checkargs(int argc, char **argv, t_data *f);
-int		rgb_to_int(double r, double g, double b);
 
 #endif

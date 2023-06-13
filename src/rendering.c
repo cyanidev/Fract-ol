@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -35,9 +35,23 @@ static int	selectfractal(t_data *data, double cr, double ci)
 
 static int	get_color(int n)
 {
+	int	bcolor;
+	int	red;
+	int	green;
+	int	blue;
 
-	if (n >= 60)
+	bcolor = 0xD2F559;
+	if (n == MAX_ITERATION)
 		return (0x000000);
+	else if (n < MAX_ITERATION / 2)
+	{
+		red = ((bcolor >> 16) & 0xFF) * n / (MAX_ITERATION / 2);
+		green = ((bcolor >> 8) & 0xFF) * n / (MAX_ITERATION / 2);
+		blue = (bcolor & 0xFF) * n / (MAX_ITERATION / 2);
+		return ((red << 16) | (green << 8) | blue);
+	}
+	else if (n < MAX_ITERATION * 3 / 4)
+		return (0xFFFB00);
 	else
 		return (0xFFFFFF);
 }
@@ -66,3 +80,27 @@ void	painting(t_data *data, int color)
 		i++;
 	}
 }
+/*It calculates the memory address of the pixel in the image buffer based
+on the given x and y coordinates and the properties of the image 
+(line_length and bits_per_pixel).
+line_length represents the number of bytes occupied by each line of pixels in 
+the image buffer. bits_per_pixel represents the number of bits used to 
+represent each pixel. It assigns the calculated memory address to the dst 
+pointer which points to the location in the image buffer where 
+the pixel color will be stored.
+It assigns the color value to the memory location pointed by dst, which effectively 
+sets the color of the pixel in the image buffer.
+By using this function, you can set the color of individual pixels in an 
+image buffer, allowing you to create images or render graphics by manipulating 
+the pixel colors. The scaling the color values based on the iteration count 
+n relative to the maximum iteration value MAX_ITERATION. The color values 
+(red, green, blue) are multiplied by n, which represents the current iteration 
+count. Then, the result is divided by (MAX_ITERATION / 2), which represents 
+half of the maximum iteration count. This division ensures that the color 
+values scale proportionally based on how close the current iteration count is 
+to the halfway point of the maximum iterations. If n is less than 
+(MAX_ITERATION / 2), the result will be less than 1.0, resulting in a darker 
+color. If n is greater than (MAX_ITERATION / 2), the result will be greater 
+than 1.0, resulting in a lighter color. By applying this scaling factor, 
+the color values are gradually transitioned from black to the specified 
+color (bcolor) as the iteration count progresses.*/
