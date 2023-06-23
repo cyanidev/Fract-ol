@@ -23,9 +23,12 @@ int	mandelbrot(double cr, double ci)
 	zr = 0;
 	zi = 0;
 	n = 0;
-	while (n < MAX_ITERATION && (zr * zr + zi * zi) < 4)
+	//si la formula es mayor a 4 no es parte del set si es menor es parte del set
+	//original formula is √(Zr^2 + Zi^2) > 2 but when you square a square root you simplify the
+	//expression and we need to do it in both sides it would be 2^2 = 4 i.e = (√16)^2 = 4^2 = 16 :) 
+	while (n < MAX_ITERATION && (zr * zr + zi * zi) < 4) //la magnitud del complex number excede el limite 2
 	{
-		zr_n = zr * zr - zi * zi + cr;
+		zr_n = zr * zr - zi * zi + cr; // c is the number we want to test for 
 		zi_n = 2 * zr * zi + ci;
 		zr = zr_n;
 		zi = zi_n;
