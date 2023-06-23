@@ -14,29 +14,31 @@
 
 static void	init(t_data *f)
 {
-	if ((f->code == 1) || (f->code == 4))
+	if ((f->code == 1) || (f->code == 4)) //mandelbrot or tricorn porque el centro esta situado un poco a la derecha
 	{
 		f->min_r = -2.0;
 		f->max_r = 1.0;
 		f->min_i = -1.5;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	else if (f->code == 3)
+	else if (f->code == 3) //mandelbox mas grande
 	{
 		f->min_r = -4.0;
 		f->max_r = 4.0;
 		f->min_i = -4.0;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
-		f->sx = 2.0;
-		f->rx = 0.5;
-		f->fx = 1.0;
+		f->sx = 2.0; //another scaling factor that is used in the calculation of the new vector values during the iteration process.
+		f->rx = 0.5; //represents a radius value used in the ball folding operation. It influences the folding behavior based on the magnitude of the vectors.
+		f->fx = 1.0; //a scaling factor that affects the folding operation applied to the vectors 'vr' and 'vi' in the Mandelbox fractal calculation.
 	}
-	else if (f->code == 2)
+	else if (f->code == 2) //julia central
 	{
 		f->min_r = -2.0;
 		f->max_r = 2.0;
 		f->min_i = -2.0;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+		//puede ser 1.5 pero se calcula para cambiar los valores del alto y ancho 
+		//de la ventana para no distorcionar el fractal.
 	}
 }
 
@@ -45,8 +47,8 @@ void	render(t_data *data)
 	int	color;
 
 	color = 0;
-	mlx_clear_window(data->mlx, data->win);
-	painting(data, color);
+	mlx_clear_window(data->mlx, data->win); // this might be needed in each movement because were alocating with put_image_to_window
+	painting(data, color); // iterates through each pixel on the screen
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
