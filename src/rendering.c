@@ -19,6 +19,18 @@ static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
+//sets the color of a pixel in an image buffer.
+//data is a pointer to the image data structure or buffer.
+//x and y represent the coordinates of the pixel.
+//color is an integer value representing the color of the pixel.
+//It calculates the memory address of the pixel in the image buffer based 
+//on the given x and y coordinates and the properties of the image (line_length and bits_per_pixel).
+//line_length represents the number of bytes occupied by each line of pixels in the image buffer.
+// bits_per_pixel represents the number of bits used to represent each pixel. xd
+//It assigns the calculated memory address to the dst pointer, which points to the 
+//location in the image buffer where the pixel color will be stored.
+//It assigns the color value to the memory location pointed by dst, 
+//which effectively sets the color of the pixel in the image buffer.
 
 static int	selectfractal(t_data *data, double cr, double ci)
 {
@@ -40,12 +52,16 @@ static int	get_color(int n)
 	int	green;
 	int	blue;
 
-	bcolor = 0xD2F559;
+	bcolor = 0xD2F559; //11111111 11010010 11110101 01011001
 	if (n == MAX_ITERATION)
 		return (0x000000);
 	else if (n < MAX_ITERATION / 2)
 	{
 		red = ((bcolor >> 16) & 0xFF) * n / (MAX_ITERATION / 2);
+		//00000000 00000000 11111111 11010010
+		//00000000 00000000 00000000 11111111 (0xFF in binary)
+		//-----------------------------------
+		//00000000 00000000 00000000 11010010
 		green = ((bcolor >> 8) & 0xFF) * n / (MAX_ITERATION / 2);
 		blue = (bcolor & 0xFF) * n / (MAX_ITERATION / 2);
 		return ((red << 16) | (green << 8) | blue);
@@ -55,6 +71,15 @@ static int	get_color(int n)
 	else
 		return (0xFFFFFF);
 }
+//' * n / (MAX_ITERATION / 2)' in the given code is scaling the 
+//color values based on the iteration count n relative to the maximum iteration value MAX_ITERATION.
+//The color values (red, green, blue) are multiplied by n, which represents the current iteration count.
+//Then, the result is divided by (MAX_ITERATION / 2), which represents half of the maximum iteration count.
+//This division ensures that the color values scale proportionally based 
+//on how close the current iteration count is to the halfway point of the maximum iterations.
+//If n is less than (MAX_ITERATION / 2), the result will be less than 1.0, resulting in a darker color.
+//If n is greater than (MAX_ITERATION / 2), the result will be greater than 1.0, resulting in a lighter color.
+//The color values are gradually transitioned from black to the specified color (bcolor) as the iteration count progresses.
 
 void	painting(t_data *data, int color)
 {
