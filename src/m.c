@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 		windowinit(&f);
 		init(&f);
 		render(&f);
-		mlx_hook(f.win, EVENT_CLOSE_BTN, 0, close_esc, &f);
+		mlx_hook(f.win, EVENT_CLOSE_BTN, 0, close_esc, &f); // 0 because x_mask is ignored on macos
 		mlx_key_hook(f.win, keycodes, &f);
 		mlx_mouse_hook(f.win, mousecode, &f);
 		mlx_loop(f.mlx);
